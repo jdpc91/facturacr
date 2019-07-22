@@ -9,11 +9,12 @@ module FE
       class Receiver
         include ActiveModel::Validations
         
-        attr_accessor :name, :identification_document,:foreign_id_number, :comercial_name, :location, :phone, :fax, :email
+        attr_accessor :name, :identification_document,:foreign_id_number, :foreign_others, :comercial_name, :location, :phone, :fax, :email
         
-        validates :name, presence: true, length: { maximum: 80 }
+        validates :name, presence: true, length: { maximum: 100 }
         validates :comercial_name, length: { maximum: 80 }
         validates :foreign_id_number, length: { maximum: 20 }
+        validates :foreign_others, length: { maximum: 300 }
         
         
         
@@ -27,6 +28,7 @@ module FE
           @fax = args[:fax]
           @email = args[:email]
           @foreign_id_number = args[:foreign_id_number]
+          @foreign_others = args[:foreign_others]
           
         end
         
@@ -44,6 +46,7 @@ module FE
             xml.IdentificacionExtranjer foreign_id_number if @foreign_id_number.present?
             xml.NombreComercial @comercial_name if @comercial_name.present?
             @location.build_xml(xml) if @location.present?
+            xml.OtrasSenasExtranjero @foreign_others if @foreign_others.present?
             @phone.build_xml(xml) if @phone.present?
             @fax.build_xml(xml) if @fax.present?
             xml.CorreoElectronico @email if @email.present?
