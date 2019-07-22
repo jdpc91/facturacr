@@ -72,7 +72,7 @@ module FE
         errors[:exent_total] << "invalid amount" unless @exone_total == (@services_exone_total + @goods_exone_total).round(5)
         errors[:subtotal] << "invalid amount" unless @subtotal == (@taxable_total + @exent_total + @exone_total).round(5)
         errors[:gross_total] << "invalid amount" unless @gross_total == (@subtotal - @discount_total).round(5)
-        errors[:net_total] << "invalid amount" unless @net_total == (@gross_total + @tax_total + @other_charges_total - @VAT_returned).round(5)
+        errors[:net_total] << "invalid amount" unless @net_total == (@gross_total + @tax_total + @other_charges_total - @vat_returned).round(5)
       end
     end
   end
