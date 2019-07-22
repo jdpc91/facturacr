@@ -4,7 +4,7 @@ module FE
       include ActiveModel::Validations
       
       attr_accessor :line_number, :code, :commercial_code, :quantity, :unit, :description, :unit_price, :total,
-                    :discount, :discount_reason, :subtotal, :taxes, :tax_net, :net_total
+                    :discount, :discount_reason, :subtotal, :taxes, taxable_base:, :tax_net, :net_total
                     
       validates :line_number, presence: true
       validates :quantity, presence: true
@@ -32,6 +32,7 @@ module FE
         @discount_reason = args[:discount_reason]
         @subtotal = args[:subtotal]
         @taxes = args[:taxes] || []
+        @taxable_base = args[:taxable_base] || @subtotal
         @tax_net = args[:tax_net]
         @net_total = args[:net_total]
       end
