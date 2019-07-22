@@ -39,11 +39,12 @@ module FE
       "3" => "Sin Internet"
     }
   
-    attr_accessor :serial, :date, :issuer, :receiver, :condition, :credit_term, 
+    attr_accessor :activity_code, :serial, :date, :issuer, :receiver, :condition, :credit_term, 
                   :payment_type, :service_type, :reference_information, 
                   :regulation, :number, :document_type, :security_code, 
-                  :items, :references, :namespaces, :summary, :document_situation, :headquarters, :terminal, :others
+                  :items, :other_charges, :references, :namespaces, :summary, :document_situation, :headquarters, :terminal, :others
     
+    validates :activity_code, presence: true, length: {is: 6}
     validates :date, presence: true
     validates :number, presence: true
     validates :issuer, presence: true
@@ -101,6 +102,7 @@ module FE
       builder  = Nokogiri::XML::Builder.new
       
       builder.send(document_tag, @namespaces) do |xml|
+        xml.CodigoActividad @activity_code
         xml.Clave key
         xml.NumeroConsecutivo sequence
         xml.FechaEmision @date.xmlschema
@@ -112,6 +114,13 @@ module FE
         xml.DetalleServicio do |x|
           @items.each do |item|
             item.build_xml(x)
+          end
+        end
+        if @other_charges.present?
+          xml.OtrosCargos do |o|
+            @other_charges.each do |other_charge|
+              other_charge.build_xml(o)
+            end
           end
         end
         
@@ -169,6 +178,7 @@ require 'facturacr/document/fax'
 require 'facturacr/document/identification_document'
 require 'facturacr/document/issuer'
 require 'facturacr/document/item'
+require 'facturacr/document/other_charges'
 require 'facturacr/document/location'
 require 'facturacr/document/phone_type'
 require 'facturacr/document/phone'
