@@ -132,7 +132,7 @@ module FE
           end
         end
         
-        regulation.build_xml(xml)
+        #regulation.build_xml(xml)
         
         if @others.present?
         xml.Otros{
