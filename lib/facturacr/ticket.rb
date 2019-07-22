@@ -5,6 +5,7 @@ module FE
   class Ticket < Document
     
     def initialize(args={})
+      @activity_code = args[:activity_code]
       @date = args[:date]
       @issuer = args[:issuer]
       @receiver = args[:receiver]
@@ -17,12 +18,13 @@ module FE
       @summary = args[:summary]
       @regulation = args[:regulation] ||= FE::Document::Regulation.new
       @others = args[:others]
+      @other_charges = args[:other_charges]
       @security_code = args[:security_code]
       @document_situation = args[:document_situation]
       @namespaces = {
         "xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instance", 
         "xmlns:xsd"=>"http://www.w3.org/2001/XMLSchema",
-        "xmlns"=>"https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/tiqueteElectronico"
+        "xmlns"=>"https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/tiqueteElectronico"
       }
     end
     
