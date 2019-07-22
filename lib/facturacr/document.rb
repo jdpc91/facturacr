@@ -102,8 +102,8 @@ module FE
       builder  = Nokogiri::XML::Builder.new
       
       builder.send(document_tag, @namespaces) do |xml|
-        xml.CodigoActividad @activity_code
         xml.Clave key
+        xml.CodigoActividad @activity_code
         xml.NumeroConsecutivo sequence
         xml.FechaEmision @date.xmlschema
         issuer.build_xml(xml)
