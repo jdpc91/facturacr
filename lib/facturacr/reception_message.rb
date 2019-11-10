@@ -92,11 +92,11 @@ module FE
         xml.NumeroCedulaEmisor @issuer_id_number
         xml.FechaEmisionDoc @date.xmlschema
         xml.Mensaje @message
-        xml.DetalleMensaje @details if @details
-        xml.CodigoActividad @economicActivity if @economicActivity 
-        xml.CondicionImpuesto @taxCondition if @taxCondition
-        xml.MontoTotalImpuestoAcreditar @totalAmountTaxCredit if @totalAmountTaxCredit
-        xml.MontoTotalDeGastoAplicable @totalAmountApplicable if @totalAmountApplicable
+        xml.DetalleMensaje @details if @details.present?
+        xml.CodigoActividad @economicActivity if @economicActivity.present? 
+        xml.CondicionImpuesto @taxCondition if @taxCondition.present?
+        xml.MontoTotalImpuestoAcreditar @totalAmountTaxCredit if @totalAmountTaxCredit.present?
+        xml.MontoTotalDeGastoAplicable @totalAmountApplicable if @totalAmountApplicable.present?
         xml.MontoTotalImpuesto @tax.to_f
         xml.TotalFactura @total
         xml.NumeroCedulaReceptor @receiver_id_number
