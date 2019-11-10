@@ -27,6 +27,8 @@ module FE
     validates :details, if: -> { message == "3" }
     validates :taxCondition, inclusion: TAX_CONDITIONS.keys
     validates :tax, numericality: true, if: -> { tax.present? }
+    validates :totalAmountTaxCredit, numericality: true
+    validates :totalAmountApplicable, numericality: true
     validates :total, presence: true, numericality: true
     validates :number, presence: true
     #validates :security_code, presence: true, length: {is: 8}
@@ -54,7 +56,7 @@ module FE
       @namespaces = {
         "xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instance", 
         "xmlns:xsd"=>"http://www.w3.org/2001/XMLSchema",
-        "xmlns"=>"https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/mensajeReceptor"
+        "xmlns"=>"https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/mensajeReceptor"
       }
     end
     
