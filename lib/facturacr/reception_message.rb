@@ -8,19 +8,30 @@ module FE
       "1" => "Aceptado",
       "2" => "Aceptacion Parcial",
       "3" => "Rechazado"
+    }    
+    
+    TAX_CONDITIONS = {
+      "01" => "Genera crédito IVA",
+      "02" => "Genera Crédito parcial del IVA",
+      "03" => "Bienes de Capital",
+      "04" => "Gasto corriente no genera crédito",
+      "05" => "Proporcionalidad"
     }
-    attr_accessor :key, :date, :issuer_id_number, :receiver_id_number, :message, :details, :tax, :total, :number, :receiver_id_type, :security_code, :document_situation, :issuer_id_type
+    
+    attr_accessor :key, :date, :issuer_id_number, :receiver_id_number, :message, :details, :economicActivity, :taxCondition, :totalAmountTaxCredit, :totalAmountApplicable, :tax, :total, :number, :receiver_id_type, :security_code, :document_situation, :issuer_id_type
     
     validates :date, presence: true
     validates :issuer_id_number, presence: true, length: {is: 12}
     validates :receiver_id_number, presence: true, length: {is: 12}
     validates :message, presence: true, inclusion: MESSAGE_TYPES.keys
+    validates :details, if: -> { message == "3" }
+    validates :taxCondition, inclusion: TAX_CONDITIONS.keys
     validates :tax, numericality: true, if: -> { tax.present? }
     validates :total, presence: true, numericality: true
     validates :number, presence: true
-    validates :security_code, presence: true, length: {is: 8}
-    validates :issuer_id_type, presence: true
-    validates :receiver_id_type, presence: true
+    #validates :security_code, presence: true, length: {is: 8}
+    #validates :issuer_id_type, presence: true
+    #validates :receiver_id_type, presence: true
     
     def initialize(args = {})
       @key = args[:key]
@@ -31,6 +42,10 @@ module FE
       @receiver_id_number = args[:receiver_id_number]
       @message = args[:message].to_s
       @details = args[:details]
+      @economicActivity = args[:economicActivity]
+      @taxCondition = args[:taxCondition]
+      @totalAmountTaxCredit = args[:totalAmountTaxCredit]
+      @totalAmountApplicable = args[:totalAmountApplicable]
       @tax = args[:tax]
       @total = args[:total]
       @number = args[:number].to_i
@@ -76,6 +91,10 @@ module FE
         xml.FechaEmisionDoc @date.xmlschema
         xml.Mensaje @message
         xml.DetalleMensaje @details if @details
+        xml.CodigoActividad @economicActivity if @economicActivity 
+        xml.CondicionImpuesto @taxCondition if @taxCondition
+        xml.MontoTotalImpuestoAcreditar @totalAmountTaxCredit if @totalAmountTaxCredit
+        xml.MontoTotalDeGastoAplicable @totalAmountApplicable if @totalAmountApplicable
         xml.MontoTotalImpuesto @tax.to_f
         xml.TotalFactura @total
         xml.NumeroCedulaReceptor @receiver_id_number
