@@ -27,8 +27,8 @@ module FE
     validates :details, length: {maximum: 160}, if: -> { message == "3" }
     validates :taxCondition, inclusion: TAX_CONDITIONS.keys
     validates :tax, numericality: true, if: -> { tax.present? }
-    validates :totalAmountTaxCredit, numericality: true
-    validates :totalAmountApplicable, numericality: true
+    validates :totalAmountTaxCredit, numericality: true, if: -> { totalAmountTaxCredit.present? }
+    validates :totalAmountApplicable, numericality: true, if: -> { totalAmountApplicable.present? }
     validates :total, presence: true, numericality: true
     validates :number, presence: true
     #validates :security_code, presence: true, length: {is: 8}
