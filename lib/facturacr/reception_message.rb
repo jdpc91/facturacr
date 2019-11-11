@@ -99,7 +99,6 @@ module FE
         xml.CondicionImpuesto @taxCondition if @taxCondition.present?
         xml.MontoTotalImpuestoAcreditar @totalAmountTaxCredit if @totalAmountTaxCredit.present?
         xml.MontoTotalDeGastoAplicable @totalAmountApplicable if @totalAmountApplicable.present?
-        xml.MontoTotalImpuesto @tax.to_f
         xml.TotalFactura @total
         xml.NumeroCedulaReceptor @receiver_id_number
         xml.NumeroConsecutivoReceptor sequence
