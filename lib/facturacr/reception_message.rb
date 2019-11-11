@@ -53,6 +53,8 @@ module FE
       @number = args[:number].to_i
       @security_code = args[:security_code]
       @document_situation = args[:document_situation]
+      @headquarters = args[:headquarters]
+      @terminal = args[:terminal]
       @namespaces = {
         "xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instance", 
         "xmlns:xsd"=>"http://www.w3.org/2001/XMLSchema",
