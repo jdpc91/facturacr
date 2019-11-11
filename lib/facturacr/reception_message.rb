@@ -21,8 +21,8 @@ module FE
     attr_accessor :key, :date, :issuer_id_number, :receiver_id_number, :message, :details, :economicActivity, :taxCondition, :totalAmountTaxCredit, :totalAmountApplicable, :tax, :total, :number, :receiver_id_type, :security_code, :document_situation, :issuer_id_type
     
     validates :date, presence: true
-    validates :issuer_id_number, presence: true, length: {is: 12}
-    validates :receiver_id_number, presence: true, length: {is: 12}
+    validates :issuer_id_number, presence: true, length: {in: 9..12}
+    validates :receiver_id_number, presence: true, length: {in: 9..12}
     validates :message, presence: true, inclusion: MESSAGE_TYPES.keys
     validates :details, length: {maximum: 160}, if: -> { message == "3" }
     validates :taxCondition, inclusion: TAX_CONDITIONS.keys
