@@ -95,6 +95,7 @@ module FE
         xml.FechaEmisionDoc @date.xmlschema
         xml.Mensaje @message
         xml.DetalleMensaje @details if @details.present?
+        xml.MontoTotalImpuesto @tax if @tax.present?
         xml.CodigoActividad @economicActivity if @economicActivity.present? 
         xml.CondicionImpuesto @taxCondition if @taxCondition.present?
         xml.MontoTotalImpuestoAcreditar @totalAmountTaxCredit if @totalAmountTaxCredit.present?
