@@ -24,7 +24,7 @@ module FE
     validates :issuer_id_number, presence: true, length: {is: 12}
     validates :receiver_id_number, presence: true, length: {is: 12}
     validates :message, presence: true, inclusion: MESSAGE_TYPES.keys
-    validates :details, if: -> { message == "3" }
+    validates :details, length: {maximum: 160}, if: -> { message == "3" }
     validates :taxCondition, inclusion: TAX_CONDITIONS.keys
     validates :tax, numericality: true, if: -> { tax.present? }
     validates :totalAmountTaxCredit, numericality: true
